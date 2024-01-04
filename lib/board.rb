@@ -1,5 +1,3 @@
-require "matrix"
-
 class Board
     def initialize
         create_board
