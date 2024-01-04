@@ -8,4 +8,8 @@ RSpec.describe Cell do
     it "exists" do
         expect(cell).to be_an_instance_of Cell
     end
+
+    it "#empty?" do
+        expect(cell.token).to be nil
+    end
 end
