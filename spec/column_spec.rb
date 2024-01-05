@@ -6,6 +6,6 @@ RSpec.describe Column do
     end
 
     it "exists" do
-        expect(column).to be_an_instance_of Column
+        expect(@column).to be_an_instance_of Column
     end
 end
