@@ -26,13 +26,23 @@ RSpec.describe Game do
         end
         
         describe "for player" do
-            describe "checks input validity" do
+            describe "validates turn input" do
                 it "if valid column option" do
-                    #display error message
+                    #valid entry
+                    expect(@game.valid_move?()).to be true
+                    
+                    #invalid entry with error message displayed
+                    expect(@game.valid_move?()).to be false
+                    expect(@game.valid_move?()).to be_a(String)
                 end
     
                 it "if column is full" do
-                    #display error message
+                    #valid entry
+                    expect(@game.valid_move?()).to be true
+                    
+                    #invalid entry with error message displayed
+                    expect(@game.valid_move?()).to be false
+                    expect(@game.valid_move?()).to be_a(String)
                 end
             end
         end
@@ -44,11 +54,19 @@ RSpec.describe Game do
 
             describe "checks input validity" do
                 it "if valid column option" do
-                    #display error message
+                    #valid entry
+                    expect(@game.valid_move?()).to be true
+                    
+                    #invalid entry with error message displayed
+                    expect(@game.valid_move?()).to be false
                 end
     
                 it "if column is full" do
-                    #display error message
+                    #valid entry
+                    expect(@game.valid_move?()).to be true
+                    
+                    #invalid entry with error message displayed
+                    expect(@game.valid_move?()).to be false
                 end
             end
         end
@@ -56,19 +74,35 @@ RSpec.describe Game do
 
     describe "ending" do
         it "checks vertical win" do
-            #code
+            #create manual board
+            expect(@game.vertical_win?).to be true
+
+            #diff manual board
+            expect(@game.vertical_win?).to be false
         end
 
-        it "checks for horizonatl win" do
-            #code
+        it "checks for horizontal win" do
+            #create manual board
+            expect(@game.horizontal_win?).to be true
+
+            #diff manual board
+            expect(@game.horizontal_win?).to be false
         end
 
         it "checks for diagonal win" do
-            #code
+            #create manual board
+            expect(@game.diagonal_win?).to be true
+
+            #diff manual board
+            expect(@game.diagonal_win?).to be false
         end
 
         it "checks for tie" do
-            #code
+            #create manual board
+            expect(@game.tie_game?).to be true
+
+            #diff manual board
+            expect(@game.tie_game?).to be false
         end
 
         it "displays end game message" do
