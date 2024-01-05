@@ -12,4 +12,9 @@ RSpec.describe Column do
     it "#empty?" do
         expect(@column.column_empty?).to be true
     end
+
+    it "#column_option?" do
+        expect(@column.column_option?("A")).to be true
+        expect(@column.column_option?("X")).to be false
+    end
 end

@@ -9,4 +9,10 @@ class Column
         @cells.any? { |cell| cell.cell_empty? }
     end
 
+    #taking user input to see if the selected column is valid; turning "A"-"G" into an array and checking for correct elements
+    def column_option?(input)
+        valid_columns = ("A".."G").to_a
+        valid_columns.include?(input)
+    end
+
 end
