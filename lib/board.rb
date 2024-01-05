@@ -8,4 +8,4 @@ class Board
         board[0] = ["A", "B", "C", "D", "E", "F", "G"]
         board.each {|row| print "#{row.join} \n"}
     end
-endf
+end
