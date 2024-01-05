@@ -11,8 +11,18 @@ class Game
     end
 
     def game_menu
-        #welcome message
-        #menu options
+        puts """\n\n#{"=" * 15} Welcome to Connect Four! #{"=" * 15}\n
+        Enter \"play\" to begin or \"quit\" to exit\n\n\n"""
+
+        player_input = gets.strip.downcase
+        case player_input
+        when "play"
+            start_game
+        when "quit"
+            exit
+        else
+            puts "Invalid input: Please enter \"play\" to begin game or \"quit\" to exit"
+        end
     end
 
     def start_game
