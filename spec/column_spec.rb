@@ -2,7 +2,7 @@ require "./spec/spec_helper.rb"
 
 RSpec.describe Column do
     before :each do
-        @column = Column.new("A")
+        @column = Column.new
     end
 
     it "exists" do
