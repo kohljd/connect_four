@@ -11,7 +11,6 @@ class Cell
         true
        end
     end
-
 end
 
     # #conditional to render cells X, O, or .

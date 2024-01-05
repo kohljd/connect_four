@@ -14,5 +14,4 @@ class Column
         valid_columns = ("A".."G").to_a
         valid_columns.include?(input)
     end
-
 end
