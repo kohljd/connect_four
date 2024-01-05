@@ -6,10 +6,10 @@ RSpec.describe Cell do
     end
 
     it "exists" do
-        expect(cell).to be_an_instance_of Cell
+        expect(@cell).to be_an_instance_of Cell
     end
 
     it "#empty?" do
-        expect(cell.token).to be nil
+        expect(@cell.token).to be nil
     end
 end
