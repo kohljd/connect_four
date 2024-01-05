@@ -10,6 +10,6 @@ RSpec.describe Column do
     end
 
     it "#empty?" do
-        expect(@column.empty?).to be true
+        expect(@column.column_empty?).to be true
     end
 end

@@ -6,8 +6,7 @@ class Column
     end
 
     def column_empty?
-        if @cells.include?(".") == true
-        end
+        @cells.any? { |cell| cell.cell_empty? }
     end
 
 end

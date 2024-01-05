@@ -6,7 +6,7 @@ class Cell
         @cell = "."
     end
 
-    def empty?
+    def cell_empty?
        if @cell = "."
         true
        end
