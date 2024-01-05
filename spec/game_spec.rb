@@ -2,11 +2,18 @@ require "./spec/spec_helper"
 
 RSpec.describe Game do
     before(:each) do
-        #code to create Game object
+        @game = Game.new
     end
     
     it "creates a game object" do
-        expect(game).to be_an_instance_of(Game)
+        expect(@game).to be_an_instance_of(Game)
+    end
+
+    describe "beginning" do        
+        it "game menu accepts user input" do
+            # code
+            #accepts user input and does the appropriate thing
+        end
     end
 
     describe "turn" do
