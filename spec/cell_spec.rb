@@ -2,7 +2,7 @@ require "./spec/spec_helper.rb"
 
 RSpec.describe Cell do
     before :each do
-        cell = Cell.new
+        @cell = Cell.new
     end
 
     it "exists" do
