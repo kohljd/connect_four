@@ -8,6 +8,4 @@ RSpec.describe Board do
     it "creates a board object" do        
         expect(@board).to be_an_instance_of(Board)
     end
-
-    
 end

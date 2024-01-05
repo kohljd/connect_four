@@ -8,4 +8,8 @@ RSpec.describe Column do
     it "exists" do
         expect(@column).to be_an_instance_of Column
     end
+
+    it "#empty?" do
+        expect(@column.empty?).to be true
+    end
 end

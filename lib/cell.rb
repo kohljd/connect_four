@@ -7,8 +7,12 @@ class Cell
     end
 
     def empty?
-        @token.nil?
+       if @cell = "."
+        true
+       end
     end
+
+end
 
     # #conditional to render cells X, O, or .
     # def assign_player_to_cell
@@ -20,5 +24,3 @@ class Cell
     #         @cell
     #     end
     # end
-end
-        

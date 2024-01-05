@@ -3,11 +3,11 @@ class Column
 
     def initialize
         @cells = Array.new(6) {Cell.new}
-        @column_letter = nil
+    end
+
+    def column_empty?
+        if @cells.include?(".") == true
+        end
     end
 
 end
-
-    # def add_token(token)
-        # code for gameplay to add tokens to columns
-    # end
