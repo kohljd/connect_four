@@ -116,7 +116,13 @@ class Game
     
     end
 
-    # top L to bottom R and top R to bottom L methods for diagonal wins
+    def top_left_to_bottom_right
+        (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
+    end
+
+    def top_right_to_bottom_left
+        (0..3).all? {|num| @board.board[0 + num][7 - num] == "X" || "O" }
+    end
 
     def change_player
         if @current_player == @player_1
