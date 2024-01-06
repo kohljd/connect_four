@@ -10,6 +10,6 @@ RSpec.describe Cell do
     end
 
     it "#empty?" do
-        expect(@cell.token).to be nil
+        expect(@cell.empty?).to be true
     end
 end
