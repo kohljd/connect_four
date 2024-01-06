@@ -103,35 +103,12 @@ board[0][3] - "A"
             #take_turn
     end
 
-    ## Notes:
-    # Methods to consider:
-    # Win conditions: Diagonal (Top left to bottom right & top right to bottom left), Horiz, Vert
-    # Tie condition: Gameboard full
-
     def tie_game?
         @board.board.each do |row|
             return false if row.any? {|cell| cell == "."}
         end
         true
     end
-
-    def vertical_win?
-        transposed_board = @board.board.transpose
-        transposed_board.each do |row|
-            return false if row.any? {|cell| cell == "."}
-        end
-        true
-    end
-
-    def horizontal_win?
-        @board.board.each do |row|
-            return false if row.any? {|cell| cell == "."}
-        end
-        true
-    end
-
-
-
 
 
 
