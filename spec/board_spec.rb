@@ -9,7 +9,9 @@ RSpec.describe Board do
         expect(@board).to be_an_instance_of(Board)
     end
 
-    it "#count_columns" do
-        expect(@board.count_columns).to eq 7
+    it "is correct size" do
+        @board.create_board    
+        expect(@board.board.size).to eq 6
+        expect(@board.board.first.size).to eq 7
     end
 end
