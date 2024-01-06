@@ -44,6 +44,8 @@ RSpec.describe Game do
                     expect(@game.valid_move?()).to be false
                     expect(@game.valid_move?()).to be_a(String)
                 end
+
+                # write tests for valid_column? and column_full? methods
             end
         end
 

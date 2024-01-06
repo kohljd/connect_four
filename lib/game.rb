@@ -56,18 +56,39 @@ class Game
             #ask for new input
     end
 
-    def column_full?
-        
-    end
-
     def valid_column?(current_player_input)
         if current_player_input == ("A".."G")
-            #update board
+            column_full?(current_player_input)
         else
             print "Invalid column name"
             take_turn
         end
     end
+
+    def column_full?(current_player_input)
+        #make current player input change to be 0-6
+        columned_board = @board.board.transpose
+        if current_player_input == "A"
+            columned_board[0]
+        end
+        @board = columned_board.transpose
+    end
+
+=begin
+board[row][column]
+A -> board[0]
+B -> board[1]
+C -> board[2]
+D -> board[3]
+E -> board[4]
+F -> board[5]
+G -> board[6]
+
+board[3][0] - "A"
+
+board.board.transpose
+board[0][3] - "A"
+=end
 
     def game_over?
         puts "game_over?"
