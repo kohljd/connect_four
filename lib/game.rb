@@ -6,6 +6,7 @@ class Game
         @board = Board.new
         @player_1 = Player.new("person", "X")
         @player_2 = Player.new("computer", "O")
+        @current_player = @player_1
         game_menu
     end
 
@@ -40,20 +41,7 @@ class Game
     def take_turn
         print "Type column name (A-G) to place token: "
         current_player_input = gets.strip.upcase
-        valid_move?(current_player_input)
-        #update board
-        #display board
-        #check if game over
-    end
-
-    def valid_move?(current_player_input)
-        puts "valid_move?"
-        #column full
-            #display message
-            #ask for new input
-        #no such column
-            #display message
-            #ask for new input
+        valid_column?(current_player_input)
     end
 
     def valid_column?(current_player_input)
@@ -65,17 +53,38 @@ class Game
         end
     end
 
+    # potentially rename?
     def column_full?(current_player_input)
-        column_number = "A".ord - current_player_input.upcase.ord
+        column_number = current_player_input.ord - "A".ord
         columned_board = @board.board.transpose
         if columned_board[column_number].include?(".")
-            # place_token
+            place_token(current_player_input)
         else
             print "Column full"
             take_turn
         end
-        @board = columned_board.transpose
         take_turn
+    end
+
+    def place_token(current_player_input)
+        column_number = current_player_input.ord - "A".ord
+        columned_board = @board.board.transpose
+        last_empty_cell_position = columned_board[column_number].rindex(".")
+        columned_board[column_number][last_empty_cell_position] = @current_player.token
+        @board = columned_board.transpose
+    end
+    
+
+            # @board.display_board
+            # game_over?
+
+    def change_player
+        if @current_player == @player_1
+            @current_player = @player_2
+            take_turn
+        else
+            take_turn
+        end
     end
 
 
