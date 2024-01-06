@@ -18,7 +18,7 @@ class Game
             case gets.strip.downcase
             when "play"
                 start_game
-                #need `break` here to exit loop?
+                break
             when "quit"
                 exit
             else
@@ -29,17 +29,17 @@ class Game
 
     def start_game
         
-        puts """How to Play: Opponents take turns dropping their token (\"X\" or \"O\") into one of the columnns A-G. The first player to connect 4 of their tokens in a horizontal, vertical, or diagonal line wins! \n
-        Player_1 is X's \n
+        puts """\nHow to Play: Opponents take turns dropping their token (\"X\" or \"O\") into one of the columnns A-G. The first player to connect 4 of their tokens in a horizontal, vertical, or diagonal line wins! \n
+        Player_1 is X's
         Computer is O's\n\n"""
+
         @board.create_board
+        @board.display_board
         take_turn
-        #instructions
-        #make/display board
-        #start 1st turn
     end
 
     def take_turn
+        puts "take_turn"
         #get player input
         #check if valid move
         #update board
@@ -48,6 +48,7 @@ class Game
     end
 
     def valid_move?(current_player_input)
+        puts "valid_move?"
         #column full
             #display message
             #ask for new input
@@ -57,6 +58,7 @@ class Game
     end
 
     def game_over?
+        puts "game_over?"
         #check for winning/tie condition
         #if false 
             #change_player
