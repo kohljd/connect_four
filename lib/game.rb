@@ -102,7 +102,6 @@ class Game
         end
     end
         
-
     def tie_game?
         @board.board.each do |row|
             return false if row.any? {|cell| cell == "."}
