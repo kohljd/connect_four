@@ -113,15 +113,18 @@ class Game
     end
 
     def diagonal_win?
-    
+        return true if top_left_to_bottom_right || top_right_to_bottom_left
+        false
     end
 
     def top_left_to_bottom_right
-        (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
+        return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
+        false
     end
 
     def top_right_to_bottom_left
-        (0..3).all? {|num| @board.board[0 + num][7 - num] == "X" || "O" }
+        return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == "X" || "O" }
+        false
     end
 
     def change_player
