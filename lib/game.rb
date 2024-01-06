@@ -12,20 +12,28 @@ class Game
 
     def game_menu
         puts """\n\n#{"=" * 15} Welcome to Connect Four! #{"=" * 15}\n
-        Enter \"play\" to begin or \"quit\" to exit\n\n\n"""
+        Type \"play\" to begin or \"quit\" to exit\n\n\n"""
 
-        player_input = gets.strip.downcase
-        case player_input
-        when "play"
-            start_game
-        when "quit"
-            exit
-        else
-            puts "Invalid input: Please enter \"play\" to begin game or \"quit\" to exit"
+        loop do
+            case gets.strip.downcase
+            when "play"
+                start_game
+                #need `break` here to exit loop?
+            when "quit"
+                exit
+            else
+                puts "Invalid input: Please type \"play\" to begin game or \"quit\" to exit\n\n"
+            end
         end
     end
 
     def start_game
+        
+        puts """How to Play: Opponents take turns dropping their token (\"X\" or \"O\") into one of the columnns A-G. The first player to connect 4 of their tokens in a horizontal, vertical, or diagonal line wins! \n
+        Player_1 is X's \n
+        Computer is O's\n\n"""
+        @board.create_board
+        take_turn
         #instructions
         #make/display board
         #start 1st turn
