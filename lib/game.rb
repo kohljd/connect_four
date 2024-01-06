@@ -66,12 +66,11 @@ class Game
     end
 
     def column_full?(current_player_input)
-        column_number = current_player_input.ord - "A".ord 
+        column_number = current_player_input.upcase.ord - "A".ord 
         #takes A-G and subtracts ASCII value (65) from the player input, so 65-65 = 0 which is A, 65-64 = 1 which is B, etc.
         columned_board = @board.board.transpose
-
-
-
+        if columned_board[column_number].include?(".")
+            true
         # if current_player_input == "A"
         #     columned_board[0]
         end
