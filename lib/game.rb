@@ -38,9 +38,9 @@ class Game
     end
 
     def take_turn
-        puts "take_turn"
-        #get player input
-        #check if valid move
+        print "Type column name (A-G) to place token: "
+        current_player_input = gets.strip.upcase
+        valid_move?(current_player_input)
         #update board
         #display board
         #check if game over
@@ -54,6 +54,19 @@ class Game
         #no such column
             #display message
             #ask for new input
+    end
+
+    def column_full?
+        
+    end
+
+    def valid_column?(current_player_input)
+        if current_player_input == ("A".."G")
+            #update board
+        else
+            print "Invalid column name"
+            take_turn
+        end
     end
 
     def game_over?
