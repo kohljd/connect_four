@@ -71,8 +71,9 @@ class Game
         columned_board = @board.board.transpose
         if columned_board[column_number].include?(".")
             true
-        # if current_player_input == "A"
-        #     columned_board[0]
+        else
+            false
+            print "Column full"
         end
         @board = columned_board.transpose
     end
@@ -101,4 +102,22 @@ board[0][3] - "A"
             #change_player
             #take_turn
     end
+
+    ## Mel's Notes:
+    # Methods to consider:
+    # Win conditions: Diagonal (Top left to bottom right & top right to bottom left), Horiz, Vert
+    # Tie condition: Gameboard full
+
+    def tie_game?
+        @board.board.each do |row|
+            row.each do |cell|
+                if cell != "."
+                    true
+                end
+            end
+        end
+    end
+
+
+
 end
