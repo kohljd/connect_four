@@ -53,7 +53,6 @@ class Game
         end
     end
 
-    # potentially rename?
     def column_full?(current_player_input)
         column_number = current_player_input.ord - "A".ord
         columned_board = @board.board.transpose
@@ -72,17 +71,45 @@ class Game
         last_empty_cell_position = columned_board[column_number].rindex(".")
         columned_board[column_number][last_empty_cell_position] = @current_player.token
         @board = columned_board.transpose
+        @board.display_board
+        game_over?
     end
-    
 
-            # @board.display_board
-            # game_over?
+    def game_over?
+        if tie_game? || horizontal_win? || vertical_win? || diagonal_win?
+            #go to end game method that declares winner and asks if play again?
+        else
+            change_player
+        end
+    end
+
+    def tie_game?
+        @board.each do |row|
+            return false if row.any? {|cell| cell == "."}
+        end
+        true
+    end
+
+    def horizontal_win?
+
+    end
+
+    def vertical_win?
+
+    end
+
+    def diagonal_win?
+    
+    end
+
+    # top L to bottom R and top R to bottom L methods for diagonal wins
 
     def change_player
         if @current_player == @player_1
             @current_player = @player_2
             take_turn
         else
+            @current_player = @player_1
             take_turn
         end
     end
@@ -103,22 +130,4 @@ board[3][0] - "A"
 board.board.transpose
 board[0][3] - "A"
 =end
-
-    def game_over?
-        puts "game_over?"
-        #check for winning/tie condition
-        #if false 
-            #change_player
-            #take_turn
-    end
-
-    def tie_game?
-        @board.board.each do |row|
-            return false if row.any? {|cell| cell == "."}
-        end
-        true
-    end
-
-
-
 end
