@@ -84,18 +84,32 @@ class Game
     end
 
     def tie_game?
-        @board.each do |row|
+        @board.board.each do |row|
             return false if row.any? {|cell| cell == "."}
         end
         true
     end
 
     def horizontal_win?
-
+        @board.board.each do |row|
+            row.each_cons(4) do |tokens|
+                return true if tokens.all? do |token|
+                    token == "X" || "O"
+                end
+            end
+            false
+        end
     end
 
     def vertical_win?
-
+        @board.board.transpose.each do |column|
+            column.each_cons(4) do |tokens|
+                return true if tokens.all? do |token|
+                    token == "X" || "O"
+                end
+            end
+            false
+        end
     end
 
     def diagonal_win?
