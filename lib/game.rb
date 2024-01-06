@@ -1,12 +1,11 @@
 class Game
     attr_reader :board,
-                :players,
-                :current_player
+                :player
     
     def initialize
         @board = Board.new
-        @players = #[player_1, computer]
-        @current_player = #@players[0]
+        @player_1 = Player.new("person", "X")
+        @player_2 = Player.new("computer", "O")
         game_menu
     end
 
@@ -30,8 +29,8 @@ class Game
     def start_game
         
         puts """\nHow to Play: Opponents take turns dropping their token (\"X\" or \"O\") into one of the columnns A-G. The first player to connect 4 of their tokens in a horizontal, vertical, or diagonal line wins! \n
-        Player_1 is X's
-        Computer is O's\n\n"""
+        #{@player_1.player_name} is X's
+        #{@player_2.player_name} is O's\n\n"""
 
         @board.create_board
         @board.display_board
