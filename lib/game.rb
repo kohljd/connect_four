@@ -77,11 +77,31 @@ class Game
 
     def game_over?
         if tie_game? || horizontal_win? || vertical_win? || diagonal_win?
-            #go to end game method that declares winner and asks if play again?
+            end_game
         else
             change_player
         end
     end
+
+    def end_game
+        print "Congratulations? #{@current_player.player_name} wins!"
+        play_again
+    end
+
+    def play_again
+        print "Play again? Type YES or NO"
+        input = gets.strip.upcase
+        if input == "YES"
+            game_menu
+        elsif input == "NO"
+            print "Goodbye!"
+            exit
+        else
+            print "ERROR"
+            play_again
+        end
+    end
+        
 
     def tie_game?
         @board.board.each do |row|
