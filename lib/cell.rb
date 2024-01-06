@@ -1,25 +1,13 @@
 class Cell
-    attr_accessor :token, :cell
+    attr_accessor :cell_value
 
     def initialize
-        @token = nil
-        @cell = "."
+        @cell_value = "."
     end
 
     def cell_empty?
-       if @cell = "."
+       if @cell_value = "."
         true
        end
     end
 end
-
-    # #conditional to render cells X, O, or .
-    # def assign_player_to_cell
-    #     if @token == "X"
-    #         # code
-    #     elsif @token == "O"
-    #         #code
-    #     else
-    #         @cell
-    #     end
-    # end
