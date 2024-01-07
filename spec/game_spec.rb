@@ -187,11 +187,11 @@ RSpec.describe Game do
                 end
 
                 it "if the column is not full" do
-                    # expect(@game.column_full?("A")).to have_received(:place_token)
+                    allow(@game).to receive(:column_full?)
+                    current_player_input = "A"
 
-                    # valid entry
-                    expect(@game.valid_column?).to receive(:take_turn).with("A")
-                    game.column_full?("A")
+                    expect(@game.valid_column?).to receive(:take_turn).with(current_player_input)
+                    game.column_full?(current_player_input)
                 end
 
                 # it "if the column is full" do
