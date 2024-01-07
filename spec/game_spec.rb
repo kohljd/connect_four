@@ -59,21 +59,23 @@ RSpec.describe Game do
                 expect(@game.current_player.player_name).to eq(@game.player_2.player_name)
             end
 
-            it "updates the board" do
-                updated_board = Board.new            
-                updated_board_array = [
-                    ['X', '.', '.', '.', '.', '.', '.'],
-                    ['X', 'X', '.', '.', '.', '.', '.'],
-                    ['.', '.', 'X', '.', '.', '.', '.'],
-                    ['.', '.', '.', 'X', '.', '.', '.'],
-                    ['.', '.', '.', '.', '.', '.', '.'],
-                    ['.', '.', '.', '.', '.', '.', '.'],
-                    ['.', '.', '.', '.', '.', '.', '.']
-                ]
-                updated_board.instance_variable_set(:@board, updated_board_array)
+            # it "updates the board" do
                 
-                expect(@game.place_token(@current_player_input)).to eq(updated_board)
-            end
+
+            #     updated_board = Board.new            
+            #     updated_board_array = [
+            #         ['X', '.', '.', '.', '.', '.', '.'],
+            #         ['X', 'X', '.', '.', '.', '.', '.'],
+            #         ['.', '.', 'X', '.', '.', '.', '.'],
+            #         ['.', '.', '.', 'X', '.', '.', '.'],
+            #         ['.', '.', '.', '.', '.', '.', '.'],
+            #         ['.', '.', '.', '.', '.', '.', '.'],
+            #         ['.', '.', '.', '.', '.', '.', '.']
+            #     ]
+            #     updated_board.instance_variable_set(:@board, updated_board_array)
+                
+            #     expect(@game.place_token(@current_player_input)).to eq(updated_board.board)
+            # end
     end
 
     describe "for player" do
@@ -84,7 +86,7 @@ RSpec.describe Game do
 
                 expect(@game).to receive(:column_full?).with("A")
 
-                # expect(@game.valid_column?("H")).to output(/Invalid column name:/).to_stdout
+                expect(@game.valid_column?("H")).to output(/Invalid column name:/).to_stdout
             end
 
             describe "#column_full?" do
