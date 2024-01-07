@@ -162,10 +162,12 @@ RSpec.describe Game do
                 ['O', 'O', 'X', 'O', 'X', 'O', 'O'],
                 ['X', 'X', 'O', 'X', 'O', 'O', 'X']
             ]
-            expect(@game.tie_game?).to be true
+            not_a_tie_game = Game.new
+            @game.instance_variable_set(:@board, tie_board)
+            not_a_tie_game.instance_variable_set(:@board, @board_1)
 
-            # use @board_1
-            expect(@game.tie_game?).to be false
+            expect(@game.tie_game?).to be true
+            expect(not_a_tie_game.tie_game?).to be false
         end
 
         it "displays end game message" do
