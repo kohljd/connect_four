@@ -11,5 +11,7 @@ RSpec.describe Cell do
 
     it "#empty?" do
         expect(@cell.cell_empty?).to be true
+        @cell.cell_value = "X"
+        expect(@cell.cell_empty?).to be false
     end
 end
