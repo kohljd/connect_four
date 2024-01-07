@@ -37,11 +37,18 @@ class Game
         @board.display_board
         take_turn
     end
-
+    
     def take_turn
-        print "Type column name (A-G) to place token: "
-        current_player_input = gets.strip.upcase
-        valid_column?(current_player_input)
+        print "Type column name (A-G) to place token: " unless @current_player.player_name == "Computer"
+        if @current_player.player_name == "Computer"
+            computer_column_options = ["A", "B", "C", "D", "E", "F", "G"]
+            current_player_input = computer_column_options.sample
+            # puts current_player_input
+            valid_column?(current_player_input)
+        else
+            current_player_input = gets.strip.upcase
+            valid_column?(current_player_input)
+        end
     end
 
     def valid_column?(current_player_input)
@@ -71,8 +78,8 @@ class Game
         last_empty_cell_position = columned_board[column_number].rindex(".")
         columned_board[column_number][last_empty_cell_position] = @current_player.token
         @board = columned_board.transpose
-        # @board.display_board
-        # game_over?
+        @board.display_board
+        game_over?
     end
 
     def game_over?
@@ -110,25 +117,25 @@ class Game
     end
 
     def horizontal_win?
-        @board.each do |row|
+        @board.board.each do |row|
             row.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
-                    token == "X" || token == "O"
+                    token == @current_player.token
                 end
             end
-            false
         end
+        false
     end
 
     def vertical_win?
-        @board.transpose.each do |column|
+        @board.board.transpose.each do |column|
             column.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
-                    token == "X" || token == "O"
+                    token == @current_player.token
                 end
             end
-            false
         end
+        false
     end
 
     def diagonal_win?
@@ -155,21 +162,4 @@ class Game
             take_turn
         end
     end
-
-
-=begin
-board[row][column]
-A -> board[0]
-B -> board[1]
-C -> board[2]
-D -> board[3]
-E -> board[4]
-F -> board[5]
-G -> board[6]
-
-board[3][0] - "A"
-
-board.board.transpose
-board[0][3] - "A"
-=end
 end

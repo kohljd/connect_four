@@ -10,6 +10,6 @@ RSpec.describe Cell do
     end
 
     it "#empty?" do
-        expect(@cell.empty?).to be true
+        expect(@cell.cell_empty?).to be true
     end
 end

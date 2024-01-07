@@ -20,7 +20,7 @@ RSpec.describe Game do
         expect(@game).to be_an_instance_of(Game)
     end
 
-    describe "beginning" do        
+    describe "beginning" do
         it "game menu accepts user input" do
             # checks to see that "play" will call #start_game
             expect(@game).to receive(:start_game)
