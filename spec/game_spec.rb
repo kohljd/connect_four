@@ -42,8 +42,6 @@ RSpec.describe Game do
             ]
             @game.instance_variable_set(:@board, @board)
             @board.instance_variable_set(:@board, @board_array)
-            
-
         end
 
             it "alternates between player and computer" do
@@ -308,6 +306,15 @@ RSpec.describe Game do
             not_a_tie_game = Game.new
             not_a_tie_game.instance_variable_set(:@board, @board_1)
             expect(not_a_tie_game.tie_game?).to be false
+        end
+
+        it "#play_again?" do
+            allow(@game).to receive(:gets).and_return("YES\n")
+            allow(@game).to receive(:game_menu)
+
+            @game.play_again
+
+            expect(@game).to have_received(:game_menu)
         end
     end
 end
