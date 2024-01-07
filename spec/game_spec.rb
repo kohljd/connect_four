@@ -68,6 +68,7 @@ RSpec.describe Game do
             #     @game.take_turn
             # end
 
+            # tests passes but stops remaining tests to run if not skipped
             xit "updates the board" do
                 updated_board = Board.new            
                 updated_board_array = [
@@ -139,12 +140,12 @@ RSpec.describe Game do
             end
 
             it "#valid_column?" do
-                # setup of #column_full?, may not need the next line
                 allow(@game).to receive(:column_full?)
+                current_player_input = "A"
 
-                expect(@game).to receive(:column_full?).with("A")
+                expect(@game).to receive(:column_full?).with(current_player_input)
 
-                # expect(@game.valid_column?("H")).to output(/Invalid column name:/).to_stdout
+                @game.valid_column?(current_player_input)
             end
 
             describe "#column_full?" do
