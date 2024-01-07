@@ -94,9 +94,11 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
-            expect(@game.vertical_win?).to be true
+            losing_game = Game.new
+            @game.instance_variable_set(:@board, winning_board)
+            losing_game.instance_variable_set(:@board, @board_1)
 
-            #diff manual board
+            expect(@game.vertical_win?).to be true
             expect(@game.vertical_win?).to be false
         end
 
@@ -119,15 +121,6 @@ RSpec.describe Game do
         end
 
         it "checks for diagonal win" do
-            # @board_1 = [
-            #     ['X', '.', '.', '.', '.', '.', '.'],
-            #     ['.', 'X', '.', '.', '.', '.', '.'],
-            #     ['.', '.', 'X', '.', '.', '.', '.'],
-            #     ['.', '.', '.', 'X', '.', '.', '.'],
-            #     ['.', '.', '.', '.', '.', '.', '.'],
-            #     ['.', '.', '.', '.', '.', '.', '.'],
-            #     ['.', '.', '.', '.', '.', '.', '.']
-            # ]
             winning_board = [
                 ['.', '.', '.', '.', '.', '.', 'X'],
                 ['.', '.', '.', '.', '.', 'X', '.'],
