@@ -14,6 +14,6 @@ class Board
         @board.each do |row|
             row.each {|cell| print "#{cell}"}
             print "\n"
-        end
+        end 
     end
 end

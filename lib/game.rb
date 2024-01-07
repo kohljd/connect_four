@@ -45,7 +45,7 @@ class Game
     end
 
     def valid_column?(current_player_input)
-        if current_player_input == ("A".."G")
+        if ("A".."G").include?(current_player_input)
             column_full?(current_player_input)
         else
             print "Invalid column name"
@@ -71,8 +71,8 @@ class Game
         last_empty_cell_position = columned_board[column_number].rindex(".")
         columned_board[column_number][last_empty_cell_position] = @current_player.token
         @board = columned_board.transpose
-        @board.display_board
-        game_over?
+        # @board.display_board
+        # game_over?
     end
 
     def game_over?
@@ -103,17 +103,17 @@ class Game
     end
         
     def tie_game?
-        @board.board.each do |row|
+        @board.each do |row|
             return false if row.any? {|cell| cell == "."}
         end
         true
     end
 
     def horizontal_win?
-        @board.board.each do |row|
+        @board.each do |row|
             row.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
-                    token == "X" || "O"
+                    token == "X" || token == "O"
                 end
             end
             false
@@ -121,10 +121,10 @@ class Game
     end
 
     def vertical_win?
-        @board.board.transpose.each do |column|
+        @board.transpose.each do |column|
             column.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
-                    token == "X" || "O"
+                    token == "X" || token == "O"
                 end
             end
             false
