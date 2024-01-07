@@ -4,8 +4,8 @@ class Game
     
     def initialize
         @board = Board.new
-        @player_1 = Player.new("person", "X")
-        @player_2 = Player.new("computer", "O")
+        @player_1 = Player.new("Person", "X")
+        @player_2 = Player.new("Computer", "O")
         @current_player = @player_1
         game_menu
     end
@@ -40,15 +40,22 @@ class Game
 
     def take_turn
         print "Type column name (A-G) to place token: "
-        current_player_input = gets.strip.upcase
-        valid_column?(current_player_input)
+        if @current_player.player_name == "Computer"
+            computer_column_options = ["A", "B", "C", "D", "E", "F", "G"]
+            current_player_input = computer_column_options.sample
+            puts current_player_input
+            valid_column?(current_player_input)
+        else
+            current_player_input = gets.strip.upcase
+            valid_column?(current_player_input)
+        end
     end
 
     def valid_column?(current_player_input)
         if ("A".."G").include?(current_player_input)
             column_full?(current_player_input)
         else
-            print "Invalid column name: "
+            print "Invalid column name: " unless @current_player.player_name == "Computer"
             take_turn
         end
     end
@@ -59,7 +66,7 @@ class Game
         if columned_board[column_number].include?(".")
             place_token(current_player_input)
         else
-            print "Column full: "
+            print "Column full: " unless @current_player.player_name == "Computer"
             take_turn
         end
     end
@@ -138,6 +145,9 @@ class Game
     def top_left_to_bottom_right?
         return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
         false
+        # cooredinates of token just placed
+        # check diagonals 
+        # current coordinates of added token and 
     end
 
     def top_right_to_bottom_left?
