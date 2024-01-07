@@ -12,6 +12,8 @@ RSpec.describe Game do
             ['.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.']
         ]
+
+        allow_any_instance_of(Game).to receive(:gets).and_return("play\n")
     end
     
     it "creates a game object" do
@@ -20,20 +22,29 @@ RSpec.describe Game do
 
     describe "beginning" do        
         it "game menu accepts user input" do
-            allow_any_instance_of(Game).to receive(:gets).and_return("play")
-
             # checks to see that "play" will call #start_game
             expect(@game).to receive(:start_game)
+            
+            # Modify this line to match your actual output when input is invalid
+            expected_output = "Invalid input: Please type \"play\" to begin game or \"quit\" to exit\n\n"
+            
+            # Use a block to capture the output of the method
+            expect { @game.game_menu }.to output(expected_output).to_stdout
         end
     end
 
     describe "turn" do
+        # set current_player_input to column, 
         it "alternates between player and computer" do
             #code
+            expect current_player = player_1
+            game.change_player
+            expect current player = player_2
         end
 
         it "updates board" do
-            #code
+            # place_token(current_player_input)
+            # check updated board
         end
         
         describe "for player" do
@@ -62,7 +73,7 @@ RSpec.describe Game do
 
         describe "for computer" do
             it "plays token in random column" do
-                #code
+                #take_turn
             end
 
             describe "checks input validity" do
@@ -181,11 +192,11 @@ RSpec.describe Game do
         end
 
         it "does not allow additional turns" do
-            #code
+            #end_game/#play_again combo or delete this one
         end
 
         it "returns user to game menu" do
-            #code
+            #play_again
         end
     end
 end
