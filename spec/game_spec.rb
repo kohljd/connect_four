@@ -20,8 +20,10 @@ RSpec.describe Game do
 
     describe "beginning" do        
         it "game menu accepts user input" do
-            # code
-            #accepts user input and does the appropriate thing
+            allow_any_instance_of(Game).to receive(:gets).and_return("play")
+
+            # checks to see that "play" will call #start_game
+            expect(@game).to receive(:start_game)
         end
     end
 
@@ -168,6 +170,10 @@ RSpec.describe Game do
 
             expect(@game.tie_game?).to be true
             expect(not_a_tie_game.tie_game?).to be false
+        end
+
+        it "checks wins for consecutive tokens" do
+            # code, use @board_1
         end
 
         it "displays end game message" do
