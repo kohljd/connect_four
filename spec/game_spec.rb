@@ -46,19 +46,19 @@ RSpec.describe Game do
 
         end
 
-            # it "alternates between player and computer" do
-            #     expect(@game.current_player.player_name).to eq(@game.player_1.player_name)
+            it "alternates between player and computer" do
+                expect(@game.current_player.player_name).to eq(@game.player_1.player_name)
 
-            #     @game.change_player
-            #     # allow(@game).to receive(:gets).and_return("A\n")
+                @game.change_player
+                # allow(@game).to receive(:gets).and_return("A\n")
                 
-            #     expect(@game.current_player.player_name).to eq(@game.player_2.player_name)
-            #     allow(@game).to receive(:gets).and_return("NO\n")
+                expect(@game.current_player.player_name).to eq(@game.player_2.player_name)
+                allow(@game).to receive(:gets).and_return("NO\n")
                 
-            #     expect(@game).to receive(:gets).and_return("NO\n")
+                expect(@game).to receive(:gets).and_return("NO\n")
                 
-            #     @game.take_turn
-            # end
+                @game.take_turn
+            end
 
             # tests passes but stops remaining tests to run if not skipped
             xit "updates the board" do
@@ -208,7 +208,6 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
             @board.instance_variable_set(:@board, @board_array)
-            # @game.instance_variable_set(:@board, @board_1)
         end
 
         it "checks vertical win" do
@@ -307,26 +306,5 @@ RSpec.describe Game do
             not_a_tie_game.instance_variable_set(:@board, @board_1)
             expect(not_a_tie_game.tie_game?).to be false
         end
-
-        # it "checks for wins with consecutive tokens" do
-        #     board = Board.new
-        #     board_array = [
-        #         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
-        #         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
-        #         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
-        #         ['O', 'X', 'X', 'O', 'O', 'X', 'X'],
-        #         ['O', 'O', 'X', 'X', 'X', 'O', 'O'],
-        #         ['O', 'O', 'X', 'O', 'X', 'O', 'O'],
-        #         ['X', 'X', 'O', 'X', 'O', 'O', 'X']
-        #     ]
-        #     board.instance_variable_set(:@board, board_array)            
-        #     @game.instance_variable_set(:@board, board)
-            
-        #     expect(@game.game_over?).to receive(:change_player)
-        # end
-
-        # it "returns the user to the game menu" do
-        #     # play_again
-        # end
     end
 end
