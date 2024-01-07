@@ -7,7 +7,6 @@ class Game
         @player_1 = Player.new("Person", "X")
         @player_2 = Player.new("Computer", "O")
         @current_player = @player_1
-        game_menu
     end
 
     def game_menu
@@ -105,6 +104,7 @@ class Game
         input = gets.strip.upcase
         if input == "YES"
             Game.new
+            game_menu
         elsif input == "NO"
             print "Goodbye!"
             exit
@@ -144,7 +144,7 @@ class Game
     end
 
     def diagonal_win?
-        return true if top_left_to_bottom_right? #|| top_right_to_bottom_left?
+        return true if top_left_to_bottom_right? || top_right_to_bottom_left?
         false
     end
 
@@ -160,16 +160,16 @@ class Game
         false
     end
 
-    # def top_right_to_bottom_left?
-    #     rows = @board.board.size
-    #     columnns = @board.board.first.size
-    #     (0..3).each do |row_number|
-    #         7.downto(3).each do |column_number|
-    #             return true if (0..3).all? {|num| @board.board[row_number + num][column_number - num] == @current_player.token }
-    #         end
-    #     end
-    #     false
-    # end
+    def top_right_to_bottom_left?
+        rows = @board.board.size
+        columns = @board.board.first.size
+        (0..rows - 3).each do |row|
+            (columns - 4..columns - 1).each do |column|
+                return true if (0..3).all? {|num| @board.board[row + num][column - num] == @current_player.token }
+            end
+        end
+        false
+    end
 
     def change_player
         if @current_player == @player_1
