@@ -48,7 +48,7 @@ class Game
         if ("A".."G").include?(current_player_input)
             column_full?(current_player_input)
         else
-            print "Invalid column name"
+            print "Invalid column name: "
             take_turn
         end
     end
@@ -59,10 +59,9 @@ class Game
         if columned_board[column_number].include?(".")
             place_token(current_player_input)
         else
-            print "Column full"
+            print "Column full: "
             take_turn
         end
-        take_turn
     end
 
     def place_token(current_player_input)
@@ -70,13 +69,13 @@ class Game
         columned_board = @board.board.transpose
         last_empty_cell_position = columned_board[column_number].rindex(".")
         columned_board[column_number][last_empty_cell_position] = @current_player.token
-        @board = columned_board.transpose
-        # @board.display_board
-        # game_over?
+        @board.board = columned_board.transpose
+        @board.display_board
+        game_over?
     end
 
     def game_over?
-        if tie_game? || horizontal_win? || vertical_win? || diagonal_win?
+        if tie_game? || vertical_win? || horizontal_win? #|| #diagonal_win?
             end_game
         else
             change_player
@@ -103,45 +102,45 @@ class Game
     end
         
     def tie_game?
-        @board.each do |row|
+        @board.board.each do |row|
             return false if row.any? {|cell| cell == "."}
         end
         true
     end
 
     def horizontal_win?
-        @board.each do |row|
+        @board.board.each do |row|
             row.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
                     token == "X" || token == "O"
                 end
             end
-            false
         end
+        false
     end
 
     def vertical_win?
-        @board.transpose.each do |column|
+        @board.board.transpose.each do |column|
             column.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
                     token == "X" || token == "O"
                 end
             end
-            false
         end
-    end
-
-    def diagonal_win?
-        return true if top_left_to_bottom_right || top_right_to_bottom_left
         false
     end
 
-    def top_left_to_bottom_right
+    def diagonal_win?
+        return true if top_left_to_bottom_right? || top_right_to_bottom_left?
+        false
+    end
+
+    def top_left_to_bottom_right?
         return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
         false
     end
 
-    def top_right_to_bottom_left
+    def top_right_to_bottom_left?
         return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == "X" || "O" }
         false
     end
