@@ -119,7 +119,7 @@ class Game
         @board.board.each do |row|
             row.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
-                    token == "X" || token == "O"
+                    token == @current_player.token
                 end
             end
         end
@@ -130,7 +130,7 @@ class Game
         @board.board.transpose.each do |column|
             column.each_cons(4) do |tokens|
                 return true if tokens.all? do |token|
-                    token == "X" || token == "O"
+                    token == @current_player.token
                 end
             end
         end
