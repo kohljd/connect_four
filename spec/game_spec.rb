@@ -68,10 +68,10 @@ RSpec.describe Game do
                     allow(@game).to receive(:column_full?)
                     @game.valid_column?("A")
 
-                    expect {@game.valid_column?("A")}.to have_received(:column_full?)
+                    expect(@game.valid_column?("A")).to have_received(:column_full?)
                     
                     @game.valid_column?("H")
-                    expect {@game.valid_column?("H")}.to output(/Invalid column name:/).to_stdout
+                    expect(@game.valid_column?("H")).to output(/Invalid column name:/).to_stdout
                 end 
     
             describe "#column_full?" do
@@ -90,6 +90,7 @@ RSpec.describe Game do
                     @full_board_game.instance_variable_set(:@board, @full_board)
                 end
                     it "if column is not full" do
+                        expect(@game.valid_column?("A")).to have_received(:column_full?)
 
 
                         #valid entry
