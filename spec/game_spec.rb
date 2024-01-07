@@ -38,7 +38,8 @@ RSpec.describe Game do
         before :each do
             @current_player_input = "A"
             @game = Game.new
-            @board_1 = [
+            @board = Board.new
+            @board_array = [
                 ['X', '.', '.', '.', '.', '.', '.'],
                 ['.', 'X', '.', '.', '.', '.', '.'],
                 ['.', '.', 'X', '.', '.', '.', '.'],
@@ -47,31 +48,32 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
-            @game.instance_variable_set(:@board, @board_1)
+            @board.instance_variable_set(:@board, @board_array)
         end
 
-        it "alternates between player and computer" do
-            expect(@game.current_player.player_name).to eq(@game.player_1.player_name)
+            it "alternates between player and computer" do
+                expect(@game.current_player.player_name).to eq(@game.player_1.player_name)
 
-            @game.change_player
+                @game.change_player
 
-            expect(@game.current_player.player_name).to eq(@game.player_2.player_name)
-        end
+                expect(@game.current_player.player_name).to eq(@game.player_2.player_name)
+            end
 
-        it "updates the board" do
-            # starting with a board of empty cells
-            updated_board = [
-                ['X', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.'],
-                ['.', '.', '.', '.', '.', '.', '.']
-            ]
-
-            expect(@game.place_token(@current_player_input)).to eq(updated_board)
-        end
+            it "updates the board" do
+                updated_board = Board.new            
+                updated_board_array = [
+                    ['X', '.', '.', '.', '.', '.', '.'],
+                    ['X', 'X', '.', '.', '.', '.', '.'],
+                    ['.', '.', 'X', '.', '.', '.', '.'],
+                    ['.', '.', '.', 'X', '.', '.', '.'],
+                    ['.', '.', '.', '.', '.', '.', '.'],
+                    ['.', '.', '.', '.', '.', '.', '.'],
+                    ['.', '.', '.', '.', '.', '.', '.']
+                ]
+                updated_board.instance_variable_set(:@board, updated_board_array)
+                
+                expect(@game.place_token(@current_player_input)).to eq(updated_board)
+            end
     end
 
     describe "for player" do
