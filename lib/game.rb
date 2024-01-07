@@ -90,20 +90,20 @@ class Game
     end
 
     def end_game
-        print "Congratulations? #{@current_player.player_name} wins!"
+        print "Congratulations! #{@current_player.player_name} wins!"
         play_again
     end
 
     def play_again
-        print "Play again? Type YES or NO"
+        puts "Play again? Type YES or NO"
         input = gets.strip.upcase
         if input == "YES"
-            game_menu
+            Game.new
         elsif input == "NO"
             print "Goodbye!"
             exit
         else
-            print "ERROR"
+            print "Invalid option: "
             play_again
         end
     end
@@ -147,7 +147,6 @@ class Game
         false
         # cooredinates of token just placed
         # check diagonals 
-        # current coordinates of added token and 
     end
 
     def top_right_to_bottom_left?
@@ -164,7 +163,7 @@ class Game
             take_turn
         end
     end
-
+end
 
 =begin
 board[row][column]
@@ -181,4 +180,3 @@ board[3][0] - "A"
 board.board.transpose
 board[0][3] - "A"
 =end
-end
