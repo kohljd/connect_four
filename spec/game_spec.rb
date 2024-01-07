@@ -47,17 +47,20 @@ RSpec.describe Game do
         end
 
             it "alternates between player and computer" do
-                expect(@game.current_player.player_name).to eq(@game.player_1.player_name)
+                allow_any_instance_of(Game).to receive(:valid_column?)            
+                game = Game.new
+                allow(game).to receive(:gets).and_return("A") 
+                            
+                game.take_turn
+            
+                expect(game.current_player.player_name).to eq(game.player_1.player_name)
 
-                @game.change_player
-                # allow(@game).to receive(:gets).and_return("A\n")
-                
-                expect(@game.current_player.player_name).to eq(@game.player_2.player_name)
-                allow(@game).to receive(:gets).and_return("NO\n")
-                
-                expect(@game).to receive(:gets).and_return("NO\n")
-                
-                @game.take_turn
+                game.change_player
+                allow(game).to receive(:gets).and_return("A\n")
+                                
+                expect(game.current_player.player_name).to eq(game.player_2.player_name)
+           
+                game.take_turn
             end
 
             # tests passes but stops remaining tests to run if not skipped
