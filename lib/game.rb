@@ -6,6 +6,7 @@ class Game
         @board = Board.new
         @player_1 = Player.new("person", "X")
         @player_2 = Player.new("computer", "O")
+        @current_player = @player_1
         game_menu
     end
 
@@ -40,24 +41,11 @@ class Game
     def take_turn
         print "Type column name (A-G) to place token: "
         current_player_input = gets.strip.upcase
-        valid_move?(current_player_input)
-        #update board
-        #display board
-        #check if game over
-    end
-
-    def valid_move?(current_player_input)
-        puts "valid_move?"
-        #column full
-            #display message
-            #ask for new input
-        #no such column
-            #display message
-            #ask for new input
+        valid_column?(current_player_input)
     end
 
     def valid_column?(current_player_input)
-        if current_player_input == ("A".."G")
+        if ("A".."G").include?(current_player_input)
             column_full?(current_player_input)
         else
             print "Invalid column name"
@@ -66,13 +54,108 @@ class Game
     end
 
     def column_full?(current_player_input)
-        #make current player input change to be 0-6
+        column_number = current_player_input.ord - "A".ord
         columned_board = @board.board.transpose
-        if current_player_input == "A"
-            columned_board[0]
+        if columned_board[column_number].include?(".")
+            place_token(current_player_input)
+        else
+            print "Column full"
+            take_turn
         end
-        @board = columned_board.transpose
+        take_turn
     end
+
+    def place_token(current_player_input)
+        column_number = current_player_input.ord - "A".ord
+        columned_board = @board.board.transpose
+        last_empty_cell_position = columned_board[column_number].rindex(".")
+        columned_board[column_number][last_empty_cell_position] = @current_player.token
+        @board = columned_board.transpose
+        # @board.display_board
+        # game_over?
+    end
+
+    def game_over?
+        if tie_game? || horizontal_win? || vertical_win? || diagonal_win?
+            end_game
+        else
+            change_player
+        end
+    end
+
+    def end_game
+        print "Congratulations? #{@current_player.player_name} wins!"
+        play_again
+    end
+
+    def play_again
+        print "Play again? Type YES or NO"
+        input = gets.strip.upcase
+        if input == "YES"
+            game_menu
+        elsif input == "NO"
+            print "Goodbye!"
+            exit
+        else
+            print "ERROR"
+            play_again
+        end
+    end
+        
+    def tie_game?
+        @board.each do |row|
+            return false if row.any? {|cell| cell == "."}
+        end
+        true
+    end
+
+    def horizontal_win?
+        @board.each do |row|
+            row.each_cons(4) do |tokens|
+                return true if tokens.all? do |token|
+                    token == "X" || token == "O"
+                end
+            end
+            false
+        end
+    end
+
+    def vertical_win?
+        @board.transpose.each do |column|
+            column.each_cons(4) do |tokens|
+                return true if tokens.all? do |token|
+                    token == "X" || token == "O"
+                end
+            end
+            false
+        end
+    end
+
+    def diagonal_win?
+        return true if top_left_to_bottom_right || top_right_to_bottom_left
+        false
+    end
+
+    def top_left_to_bottom_right
+        return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
+        false
+    end
+
+    def top_right_to_bottom_left
+        return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == "X" || "O" }
+        false
+    end
+
+    def change_player
+        if @current_player == @player_1
+            @current_player = @player_2
+            take_turn
+        else
+            @current_player = @player_1
+            take_turn
+        end
+    end
+
 
 =begin
 board[row][column]
@@ -89,12 +172,4 @@ board[3][0] - "A"
 board.board.transpose
 board[0][3] - "A"
 =end
-
-    def game_over?
-        puts "game_over?"
-        #check for winning/tie condition
-        #if false 
-            #change_player
-            #take_turn
-    end
 end
