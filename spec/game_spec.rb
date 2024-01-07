@@ -106,6 +106,22 @@ RSpec.describe Game do
             @board.instance_variable_set(:@board, @board_array)
         end
         
+        it "#take_turn" do
+                allow(@game).to receive(:gets).and_return("A\n")
+                allow(@game).to receive(:valid_column?)
+
+                allow(@game.current_player).to receive(:player_name).and_return("Computer")
+
+                expect(@game.current_player.player_name).to eq("Computer")
+
+                @game.take_turn
+
+
+                allow(@game.current_player).to receive(:player_name).and_return("Human")
+
+                expect(@game.current_player.player_name).to eq("Human")
+        end
+        
         describe "validates turn input" do
             before(:each) do
                 @game = Game.new
