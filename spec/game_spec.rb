@@ -89,11 +89,14 @@ RSpec.describe Game do
                     @game.instance_variable_set(:@board, @board_1)
                     @full_board_game.instance_variable_set(:@board, @full_board)
                 end
-                    it "if column is full" do
+                    it "if column is not full" do
 
 
                         #valid entry
                         expect(@game.valid_column?()).to be true
+                    end
+
+                    it "if column is full" do
                         
                         #invalid entry with error message displayed
                         expect(@game.valid_column?()).to be false
