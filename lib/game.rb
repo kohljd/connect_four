@@ -83,7 +83,7 @@ class Game
     end
 
     def game_over?
-        if tie_game? || vertical_win? || horizontal_win? #|| #diagonal_win?
+        if tie_game? || vertical_win? || horizontal_win? || diagonal_win?
             end_game
         else
             change_player
@@ -150,22 +150,18 @@ class Game
 
     def top_left_to_bottom_right?
         #6 rows, 7 columns
-
-        (0..3).times do |row_number|
-            (0..4).times do |column_number|
-                return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == @current_player.token }
+        (0..3).each do |row_number|
+            (0..4).each do |column_number|
+                return true if (0..3).all? {|num| @board.board[row_number + num][column_number + num] == @current_player.token }
             end
         end
-        
         false
-        # cooredinates of token just placed
-        # check diagonals 
     end
 
     def top_right_to_bottom_left?
-        (0..3).times do |row_number|
-            (0..4).times do |column_number|
-                return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == @current_player.token }
+        (0..3).each do |row_number|
+            7.downto(3).each do |column_number|
+                return true if (0..3).all? {|num| @board.board[row_number + num][column_number - num] == @current_player.token }
             end
         end
         false
