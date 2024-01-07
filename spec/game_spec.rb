@@ -97,15 +97,16 @@ RSpec.describe Game do
                         ['X', 'X', 'O', 'X', 'O', 'O', 'X']
                     ]
                     @full_board_game = Game.new
-                    @game.instance_variable_set(:@board, Board.new(@board_1))
-                    @full_board_game.instance_variable_set(:@board, Board.new(@full_board))
+                    @game.instance_variable_set(:@board, @board_1)
+                    @full_board_game.instance_variable_set(:@board, @full_board)
                 end
 
                 it "if the column is not full" do
                     expect(@game.column_full?("A")).to have_received(:place_token)
 
                     # valid entry
-                    expect(@game.valid_column?).to be true
+                    expect(@game.valid_column?).to receive(:take_turn).with("A")
+                    game.column_full?("A")
                 end
 
                 # it "if the column is full" do
@@ -154,8 +155,8 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
             losing_game = Game.new
-            @game.instance_variable_set(:@board, Board.new(winning_board))
-            losing_game.instance_variable_set(:@board, Board.new(@board_1))
+            @game.instance_variable_set(:@board, winning_board)
+            losing_game.instance_variable_set(:@board, @board_1)
 
             expect(@game.vertical_win?).to be true
             expect(@game.vertical_win?).to be false
@@ -173,8 +174,8 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
             losing_game = Game.new
-            @game.instance_variable_set(:@board, Board.new(winning_board))
-            losing_game.instance_variable_set(:@board, Board.new(@board_1))
+            @game.instance_variable_set(:@board, winning_board)
+            losing_game.instance_variable_set(:@board, @board_1)
 
             expect(@game.horizontal_win?).to be true
             expect(losing_game.horizontal_win?).to be false
@@ -201,9 +202,9 @@ RSpec.describe Game do
             ]
             game_1 = Game.new
             losing_game = Game.new
-            @game.instance_variable_set(:@board, Board.new(@board_1))
-            game_1.instance_variable_set(:@board, Board.new(winning_board))
-            losing_game.instance_variable_set(:@board, Board.new(losing_board))
+            @game.instance_variable_set(:@board, @board_1)
+            game_1.instance_variable_set(:@board, winning_board)
+            losing_game.instance_variable_set(:@board, losing_board)
 
             # top-left to bottom-right
             expect(@game.diagonal_win?).to be true
@@ -223,8 +224,8 @@ RSpec.describe Game do
                 ['X', 'X', 'O', 'X', 'O', 'O', 'X']
             ]
             not_a_tie_game = Game.new
-            @game.instance_variable_set(:@board, Board.new(tie_board))
-            not_a_tie_game.instance_variable_set(:@board, Board.new(@board_1))
+            @game.instance_variable_set(:@board, tie_board)
+            not_a_tie_game.instance_variable_set(:@board, @board_1)
 
             expect(@game.tie_game?).to be true
             expect(not_a_tie_game.tie_game?).to be false
