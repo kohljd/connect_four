@@ -1,13 +1,14 @@
 class Game
-    attr_reader :board,
-                :player
+    attr_reader :board, 
+                :current_player,
+                :player_1,
+                :player_2
     
     def initialize
         @board = Board.new
         @player_1 = Player.new("Person", "X")
         @player_2 = Player.new("Computer", "O")
         @current_player = @player_1
-        game_menu
     end
 
     def game_menu
@@ -35,12 +36,11 @@ class Game
 
         @board.create_board
         @board.display_board
-        puts "\n"
         take_turn
     end
 
     def take_turn
-        print "Type column name (A-G) to place token: " unless @current_player.player_name == "Computer"
+        print "\nType column name (A-G) to place token: " unless @current_player.player_name == "Computer"
         if @current_player.player_name == "Computer"
             computer_column_options = ["A", "B", "C", "D", "E", "F", "G"]
             current_player_input = computer_column_options.sample
@@ -64,7 +64,7 @@ class Game
         column_number = current_player_input.ord - "A".ord
         columned_board = @board.board.transpose
         if columned_board[column_number].include?(".")
-            puts "Type column name (A-G) to place token: #{current_player_input}" if @current_player.player_name == "Computer"
+            puts "\nType column name (A-G) to place token: #{current_player_input}" if @current_player.player_name == "Computer"
             place_token(current_player_input)
         else
             print "Column full: " unless @current_player.player_name == "Computer"
@@ -105,8 +105,10 @@ class Game
         input = gets.strip.upcase
         if input == "YES"
             Game.new
+            @current_player = @player_1
+            game_menu
         elsif input == "NO"
-            print "Goodbye!"
+            puts "Goodbye!"
             exit
         else
             print "Invalid option: "
@@ -150,18 +152,22 @@ class Game
 
     def top_left_to_bottom_right?
         #6 rows, 7 columns
-        (0..3).each do |row_number|
-            (0..4).each do |column_number|
-                return true if (0..3).all? {|num| @board.board[row_number + num][column_number + num] == @current_player.token }
+        rows = @board.board.size
+        columns = @board.board.first.size
+        (0..rows - 4).each do |row|
+            (0..columns - 4).each do |column|
+                return true if (0..3).all? {|num| @board.board[row + num][column + num] == @current_player.token }
             end
         end
         false
     end
 
     def top_right_to_bottom_left?
-        (0..3).each do |row_number|
-            7.downto(3).each do |column_number|
-                return true if (0..3).all? {|num| @board.board[row_number + num][column_number - num] == @current_player.token }
+        rows = @board.board.size
+        columns = @board.board.first.size
+        (0..rows - 4).each do |row|
+            (3..columns - 1).each do |column|
+                return true if (0..3).all? {|num| @board.board[row + num][column - num] == @current_player.token }
             end
         end
         false
