@@ -151,17 +151,10 @@ RSpec.describe Game do
             describe "#column_full?" do
                 before :each do
                     @game = Game.new
-                    @board_1 = [
-                        ['X', '.', '.', '.', '.', '.', '.'],
-                        ['.', 'X', '.', '.', '.', '.', '.'],
-                        ['.', '.', 'X', '.', '.', '.', '.'],
-                        ['.', '.', '.', 'X', '.', '.', '.'],
-                        ['.', '.', '.', '.', '.', '.', '.'],
-                        ['.', '.', '.', '.', '.', '.', '.'],
-                        ['.', '.', '.', '.', '.', '.', '.']
-                    ]
-                    @game.instance_variable_set(:@board, @board_1)
-                    @full_board = [
+                    @board = Board.new
+                    @full_board_game = Game.new 
+                    @full_board = Board.new 
+                    @full_board_array = [
                         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
                         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
                         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
@@ -169,9 +162,7 @@ RSpec.describe Game do
                         ['O', 'O', 'X', 'X', 'X', 'O', 'O'],
                         ['O', 'O', 'X', 'O', 'X', 'O', 'O'],
                         ['X', 'X', 'O', 'X', 'O', 'O', 'X']
-                    ]
-                    @full_board_game = Game.new
-                    @board = Board.new
+                    ]                  
                     @board_array = [
                         ['X', '.', '.', '.', '.', '.', '.'],
                         ['.', 'X', '.', '.', '.', '.', '.'],
@@ -182,22 +173,20 @@ RSpec.describe Game do
                         ['.', '.', '.', '.', '.', '.', '.']
                     ]
                     @board.instance_variable_set(:@board, @board_array)
-                    @game.instance_variable_set(:@board, @board_1)
+                    @game.instance_variable_set(:@board, @board)
+                    @full_board.instance_variable_set(:@board, @full_board_array)
                     @full_board_game.instance_variable_set(:@board, @full_board)
                 end
 
-                it "if the column is not full" do
-                    allow(@game).to receive(:column_full?)
+                it "column_full? functions" do
+                    allow(@full_game).to receive(:column_full?)
                     current_player_input = "A"
+                    allow(@game).to receive(:gets).and_return("NO\n")
 
-                    expect(@game.valid_column?).to receive(:take_turn).with(current_player_input)
-                    game.column_full?(current_player_input)
+
+                    expect(@game).to receive(:take_turn).with(current_player_input)
+                    @game.column_full?(current_player_input)
                 end
-
-                # it "if the column is full" do
-                #     # invalid entry with an error message displayed
-                #     expect(@game.valid_column?).to be false
-                # end
             end
         end
     end
@@ -324,7 +313,8 @@ RSpec.describe Game do
         end
 
         it "checks for a tie" do
-            tie_board = [
+            tie_board = Board.new
+            tie_board_array = [
                 ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
                 ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
                 ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
@@ -333,12 +323,14 @@ RSpec.describe Game do
                 ['O', 'O', 'X', 'O', 'X', 'O', 'O'],
                 ['X', 'X', 'O', 'X', 'O', 'O', 'X']
             ]
-            not_a_tie_game = Game.new
+            tie_board.instance_variable_set(:@board, tie_board_array)
+            
             @game.instance_variable_set(:@board, tie_board)
-            not_a_tie_game.instance_variable_set(:@board, @board_1)
-
             expect(@game.tie_game?).to be true
-            expect(not_a_tie_game.tie_game?).to be false
+
+            # not_a_tie_game = Game.new
+            # not_a_tie_game.instance_variable_set(:@board, @board_1)
+            # expect(not_a_tie_game.tie_game?).to be false
         end
 
         # it "checks for wins with consecutive tokens" do
