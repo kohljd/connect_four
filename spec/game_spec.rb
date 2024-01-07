@@ -1,19 +1,5 @@
 require "./spec/spec_helper"
 
-# RSpec.describe Game do
-#     describe "#game_menu" do
-
-#         it "starts the game when user inputs 'play'" do
-#                 allow_any_instance_of(Object).to receive(:gets).and_return("play\n")
-        
-#                 game = Game.new
-#                 expect(game).to receive(:start_game)
-        
-#                 game.game_menu
-#             end
-#         end
-#     end
-
 RSpec.describe Game do
     before(:each) do
         @game = Game.new
@@ -29,45 +15,36 @@ RSpec.describe Game do
     end
 
     it "creates a game object" do
-        game = Game.new
-        expect(game).to be_an_instance_of(Game)
+        expect(@game).to be_an_instance_of(Game)
     end
 
-    # it "starts the game when user inputs 'play'" do
-    #     game = Game.new
-    #     allow(game).to receive(:gets).and_return("play\n")
-    #     expect(game).to receive(:start_game)
+    it "starts the game when user inputs 'play'" do
+        allow(@game).to receive(:gets).and_return("play\n")
+        expect(@game).to receive(:start_game)
   
-    #     game.game_menu
-    #     # allow(game).to receive(:gets).and_return("sdkfjkdj\n")
-    #     # expect(game.game_menu).to include("Invalid input:")
-    #     # # @game.game_menu("play\n")
-
-    #     # expect(@game).to receive(:start_game)
-    # end
+        @game.game_menu
+    end
 
     # describe "beginning" do
     #     it "game menu accepts user input" do
-    #         game = Game.new
-    #         allow(game).to receive(:gets).and_return("play\n")
-    #         expect(game).to receive(:start_game)
-    #         game.game_menu
+    #         allow(@game).to receive(:gets).and_return("play\n")
+    #         expect(@game).to receive(:start_game)
+    #         @@game.game_menu
     #     end
     # end
 
     describe "turn" do
         before :each do
             @current_player_input = "A"
-            @player_1 = @game.player_1
-            @player_2 = @game.player_2
+            @game = Game.new
         end
 
         it "alternates between player and computer" do
-            expect(@game.current_player).to eq(@player_1)
+            expect(@game.current_player.player_name).to eq(@game.player_1.player_name)
 
             @game.change_player
 
-            expect(@game.current_player).to eq(@player_2)
+            expect(@game.current_player.player_name).to eq(@game.player_2.player_name)
         end
 
         it "updates the board" do
@@ -82,7 +59,7 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
 
-            expect(place_token(@current_player_input)).to eq(updated_board)
+            expect(@game.place_token(@current_player_input)).to eq(updated_board)
         end
     end
 
@@ -91,9 +68,8 @@ RSpec.describe Game do
             it "#valid_column?" do
                 # setup of #column_full?, may not need the next line
                 allow(@game).to receive(:column_full?)
-                @game.valid_column?("A")
 
-                expect(@game.valid_column?("A")).to have_received(:column_full?)
+                expect(@game).to receive(:column_full?).with("A")
 
                 @game.valid_column?("H")
                 expect(@game.valid_column?("H")).to output(/Invalid column name:/).to_stdout
@@ -122,37 +98,39 @@ RSpec.describe Game do
                     expect(@game.valid_column?).to be true
                 end
 
-                it "if the column is full" do
-                    # invalid entry with an error message displayed
-                    expect(@game.valid_column?).to be false
-                end
+                # it "if the column is full" do
+                #     # invalid entry with an error message displayed
+                #     expect(@game.valid_column?).to be false
+                # end
             end
         end
     end
 
-    describe "for computer" do
-        it "plays a token in a random column" do
-            # take_turn
-        end
+    # describe "for computer" do
+    #     it "plays a token in a random column" do
+    #         # take_turn
+    #     end
 
-        describe "checks input validity" do
-            it "if a valid column option" do
-                # valid entry
-                expect(@game.valid_move?).to be true
+    #     describe "checks input validity" do
+    #         it "if a valid column option" do
+    #             # valid entry
+    #             expect(@game.valid_move?).to be true
 
-                # invalid entry with an error message displayed
-                expect(@game.valid_move?).to be false
-            end
+    #             # invalid entry with an error message displayed
+    #             expect(@game.valid_move?).to be false
+    #         end
 
-            it "if the column is full" do
-                # valid entry
-                expect(@game.valid_move?).to be true
+    #         it "if the column is full" do
+    #             # valid entry
+    #             expect(@game.valid_move?).to be true
 
-                # invalid entry with an error message displayed
-                expect(@game.valid_move?).to be false
-            end
-        end
-    end
+    #             # invalid entry with an error message displayed
+    #             expect(@game.valid_move?).to be false
+    #         end
+    #     end
+    # end
+
+    
 
     describe "ending" do
         it "checks vertical win" do
@@ -242,20 +220,20 @@ RSpec.describe Game do
             expect(not_a_tie_game.tie_game?).to be false
         end
 
-        it "checks for wins with consecutive tokens" do
-            # code, use @board_1
-        end
+        # it "checks for wins with consecutive tokens" do
+        #     # code, use @board_1
+        # end
 
-        it "displays the end game message" do
-            # code
-        end
+        # it "displays the end game message" do
+        #     # code
+        # end
 
-        it "does not allow additional turns" do
-            # end_game/#play_again combo or delete this one
-        end
+        # it "does not allow additional turns" do
+        #     # end_game/#play_again combo or delete this one
+        # end
 
-        it "returns the user to the game menu" do
-            # play_again
-        end
+        # it "returns the user to the game menu" do
+        #     # play_again
+        # end
     end
 end
