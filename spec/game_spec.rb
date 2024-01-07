@@ -79,7 +79,31 @@ RSpec.describe Game do
     end
 
     describe "for player" do
+        before(:each) do
+            @game = Game.new
+            @board_1 = [
+                ['X', '.', '.', '.', '.', '.', '.'],
+                ['.', 'X', '.', '.', '.', '.', '.'],
+                ['.', '.', 'X', '.', '.', '.', '.'],
+                ['.', '.', '.', 'X', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.']
+            ]
+            @game.instance_variable_set(:@board, @board_1)
         describe "validates turn input" do
+            before(:each) do
+                @game = Game.new
+                @board_1 = [
+                    ['X', '.', '.', '.', '.', '.', '.'],
+                    ['.', 'X', '.', '.', '.', '.', '.'],
+                    ['.', '.', 'X', '.', '.', '.', '.'],
+                    ['.', '.', '.', 'X', '.', '.', '.'],
+                    ['.', '.', '.', '.', '.', '.', '.'],
+                    ['.', '.', '.', '.', '.', '.', '.'],
+                    ['.', '.', '.', '.', '.', '.', '.']
+                ]
+                @game.instance_variable_set(:@board, @board_1)
             it "#valid_column?" do
                 # setup of #column_full?, may not need the next line
                 allow(@game).to receive(:column_full?)
@@ -91,6 +115,18 @@ RSpec.describe Game do
 
             describe "#column_full?" do
                 before :each do
+                    before(:each) do
+                    @game = Game.new
+                    @board_1 = [
+                        ['X', '.', '.', '.', '.', '.', '.'],
+                        ['.', 'X', '.', '.', '.', '.', '.'],
+                        ['.', '.', 'X', '.', '.', '.', '.'],
+                        ['.', '.', '.', 'X', '.', '.', '.'],
+                        ['.', '.', '.', '.', '.', '.', '.'],
+                        ['.', '.', '.', '.', '.', '.', '.'],
+                        ['.', '.', '.', '.', '.', '.', '.']
+                    ]
+                    @game.instance_variable_set(:@board, @board_1)
                     @full_board = [
                         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
                         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
@@ -148,6 +184,18 @@ RSpec.describe Game do
     
 
     describe "ending" do
+        before(:each) do
+            @game = Game.new
+            @board_1 = [
+                ['X', '.', '.', '.', '.', '.', '.'],
+                ['.', 'X', '.', '.', '.', '.', '.'],
+                ['.', '.', 'X', '.', '.', '.', '.'],
+                ['.', '.', '.', 'X', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.']
+            ]
+            @game.instance_variable_set(:@board, @board_1)
         it "checks vertical win" do
             winning_board = [
                 ['X', '.', '.', '.', '.', '.', '.'],
