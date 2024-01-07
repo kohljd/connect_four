@@ -44,7 +44,6 @@ class Game
         if @current_player.player_name == "Computer"
             computer_column_options = ["A", "B", "C", "D", "E", "F", "G"]
             current_player_input = computer_column_options.sample
-            # puts current_player_input
             valid_column?(current_player_input)
         else
             current_player_input = gets.strip.upcase
@@ -150,14 +149,25 @@ class Game
     end
 
     def top_left_to_bottom_right?
-        return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
+        #6 rows, 7 columns
+
+        (0..3).times do |row_number|
+            (0..4).times do |column_number|
+                return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == @current_player.token }
+            end
+        end
+        
         false
         # cooredinates of token just placed
         # check diagonals 
     end
 
     def top_right_to_bottom_left?
-        return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == "X" || "O" }
+        (0..3).times do |row_number|
+            (0..4).times do |column_number|
+                return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == @current_player.token }
+            end
+        end
         false
     end
 
