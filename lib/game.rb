@@ -4,8 +4,8 @@ class Game
     
     def initialize
         @board = Board.new
-        @player_1 = Player.new("person", "X")
-        @player_2 = Player.new("computer", "O")
+        @player_1 = Player.new("Person", "X")
+        @player_2 = Player.new("Computer", "O")
         @current_player = @player_1
         game_menu
     end
@@ -35,15 +35,15 @@ class Game
 
         @board.create_board
         @board.display_board
+        puts "\n"
         take_turn
     end
-    
+
     def take_turn
         print "Type column name (A-G) to place token: " unless @current_player.player_name == "Computer"
         if @current_player.player_name == "Computer"
             computer_column_options = ["A", "B", "C", "D", "E", "F", "G"]
             current_player_input = computer_column_options.sample
-            # puts current_player_input
             valid_column?(current_player_input)
         else
             current_player_input = gets.strip.upcase
@@ -55,7 +55,7 @@ class Game
         if ("A".."G").include?(current_player_input)
             column_full?(current_player_input)
         else
-            print "Invalid column name"
+            print "Invalid column name: " unless @current_player.player_name == "Computer"
             take_turn
         end
     end
@@ -64,12 +64,12 @@ class Game
         column_number = current_player_input.ord - "A".ord
         columned_board = @board.board.transpose
         if columned_board[column_number].include?(".")
+            puts "Type column name (A-G) to place token: #{current_player_input}" if @current_player.player_name == "Computer"
             place_token(current_player_input)
         else
-            print "Column full"
+            print "Column full: " unless @current_player.player_name == "Computer"
             take_turn
         end
-        take_turn
     end
 
     def place_token(current_player_input)
@@ -77,13 +77,13 @@ class Game
         columned_board = @board.board.transpose
         last_empty_cell_position = columned_board[column_number].rindex(".")
         columned_board[column_number][last_empty_cell_position] = @current_player.token
-        @board = columned_board.transpose
+        @board.board = columned_board.transpose
         @board.display_board
         game_over?
     end
 
     def game_over?
-        if tie_game? || horizontal_win? || vertical_win? || diagonal_win?
+        if tie_game? || vertical_win? || horizontal_win? #|| #diagonal_win?
             end_game
         else
             change_player
@@ -91,26 +91,31 @@ class Game
     end
 
     def end_game
-        print "Congratulations? #{@current_player.player_name} wins!"
-        play_again
+        if tie_game?
+            print "It's a draw! Better luck next time. "
+            play_again
+        else 
+            print "Congratulations! #{@current_player.player_name} wins! "
+            play_again
+        end
     end
 
     def play_again
-        print "Play again? Type YES or NO"
+        puts "Play again? Type YES or NO"
         input = gets.strip.upcase
         if input == "YES"
-            game_menu
+            Game.new
         elsif input == "NO"
             print "Goodbye!"
             exit
         else
-            print "ERROR"
+            print "Invalid option: "
             play_again
         end
     end
         
     def tie_game?
-        @board.each do |row|
+        @board.board.each do |row|
             return false if row.any? {|cell| cell == "."}
         end
         true
@@ -139,17 +144,30 @@ class Game
     end
 
     def diagonal_win?
-        return true if top_left_to_bottom_right || top_right_to_bottom_left
+        return true if top_left_to_bottom_right? || top_right_to_bottom_left?
         false
     end
 
-    def top_left_to_bottom_right
-        return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == "X" || "O" }
+    def top_left_to_bottom_right?
+        #6 rows, 7 columns
+
+        (0..3).times do |row_number|
+            (0..4).times do |column_number|
+                return true if (0..3).all? {|num| @board.board[0 + num][0 + num] == @current_player.token }
+            end
+        end
+        
         false
+        # cooredinates of token just placed
+        # check diagonals 
     end
 
-    def top_right_to_bottom_left
-        return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == "X" || "O" }
+    def top_right_to_bottom_left?
+        (0..3).times do |row_number|
+            (0..4).times do |column_number|
+                return true if (0..3).all? {|num| @board.board[0 + num][7 - num] == @current_player.token }
+            end
+        end
         false
     end
 

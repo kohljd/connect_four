@@ -90,7 +90,7 @@ RSpec.describe Game do
                     @full_board_game.instance_variable_set(:@board, @full_board)
                 end
                     it "if column is not full" do
-                        expect(@game.valid_column?("A")).to have_received(:column_full?)
+                        expect(@game.column_full?("A")).to have_received(:place_token)
 
 
                         #valid entry
