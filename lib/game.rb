@@ -35,15 +35,16 @@ class Game
 
         @board.create_board
         @board.display_board
+        puts "\n"
         take_turn
     end
 
     def take_turn
-        print "Type column name (A-G) to place token: "
+        print "Type column name (A-G) to place token: " unless @current_player.player_name == "Computer"
         if @current_player.player_name == "Computer"
             computer_column_options = ["A", "B", "C", "D", "E", "F", "G"]
             current_player_input = computer_column_options.sample
-            puts current_player_input
+            # puts current_player_input
             valid_column?(current_player_input)
         else
             current_player_input = gets.strip.upcase
@@ -64,6 +65,7 @@ class Game
         column_number = current_player_input.ord - "A".ord
         columned_board = @board.board.transpose
         if columned_board[column_number].include?(".")
+            puts "Type column name (A-G) to place token: #{current_player_input}" if @current_player.player_name == "Computer"
             place_token(current_player_input)
         else
             print "Column full: " unless @current_player.player_name == "Computer"
@@ -90,8 +92,13 @@ class Game
     end
 
     def end_game
-        print "Congratulations! #{@current_player.player_name} wins!"
-        play_again
+        if tie_game?
+            print "It's a draw! Better luck next time. "
+            play_again
+        else 
+            print "Congratulations! #{@current_player.player_name} wins! "
+            play_again
+        end
     end
 
     def play_again
