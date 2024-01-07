@@ -12,10 +12,16 @@ RSpec.describe Game do
             ['.', '.', '.', '.', '.', '.', '.'],
             ['.', '.', '.', '.', '.', '.', '.']
         ]
-
-        allow_any_instance_of(Game).to receive(:gets).and_return("play\n")
+        # allow(@game).to receive(:gets).and_return("play\n")
+        # @game.game_menu("play\n")
     end
-    
+
+    it "starts the game when user inputs 'play'" do
+        expect(@game).to receive(:start_game)
+        expect { @game.game_menu }.to output(/Type "play" to begin or "quit" to exit/).to_stdout
+    end
+      
+
     it "creates a game object" do
         expect(@game).to be_an_instance_of(Game)
     end
@@ -24,47 +30,55 @@ RSpec.describe Game do
         it "game menu accepts user input" do
             # checks to see that "play" will call #start_game
             expect(@game).to receive(:start_game)
-            
-            # Modify this line to match your actual output when input is invalid
-            expected_output = "Invalid input: Please type \"play\" to begin game or \"quit\" to exit\n\n"
-            
-            # Use a block to capture the output of the method
-            expect { @game.game_menu }.to output(expected_output).to_stdout
         end
     end
 
     describe "turn" do
-        # set current_player_input to column, 
+        before :each do
+            @current_player_input = "A"
+            @player_1 = @game.player_1
+            @player_2 = @game.player_2 
         it "alternates between player and computer" do
-            #code
-            expect current_player = player_1
-            game.change_player
-            expect current player = player_2
+            expect(@game.current_player).to eq(@player_1)
+
+            @game.change_player
+
+            expect(@game.current_player).to eq(@player_2)
         end
 
         it "updates board" do
-            # place_token(current_player_input)
-            # check updated board
+            # starting with a board of empty cells
+            updated_board =[
+                ['X', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.'],
+                ['.', '.', '.', '.', '.', '.', '.']
+            ]
+
+            expect(place_token(@current_player_input)).to eq(updated_board)
         end
         
         describe "for player" do
             describe "validates turn input" do
                 it "if valid column option" do
                     #valid entry
-                    expect(@game.valid_move?()).to be true
+                    expect(@game.valid_column?()).to be true
                     
                     #invalid entry with error message displayed
-                    expect(@game.valid_move?()).to be false
-                    expect(@game.valid_move?()).to be_a(String)
+                    expect(@game.valid_column?()).to be false
+                    expect(@game.valid_column?()).to be_a(String)
                 end
     
                 it "if column is full" do
                     #valid entry
-                    expect(@game.valid_move?()).to be true
+                    expect(@game.valid_column?()).to be true
                     
                     #invalid entry with error message displayed
-                    expect(@game.valid_move?()).to be false
-                    expect(@game.valid_move?()).to be_a(String)
+                    expect(@game.valid_column?()).to be false
+                    expect(@game.valid_column?()).to be_a(String)
                 end
 
                 # write tests for valid_column? and column_full? methods
