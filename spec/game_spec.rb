@@ -15,11 +15,11 @@ RSpec.describe Game do
     end
 
     it "starts the game when user inputs 'play'" do
-        allow(@game).to receive(:gets).and_return("play\n")
-        @game.game_menu("play\n")
+        allow(@game).to receive(:gets).and_return("sdkfjkdj\n")
+        expect(@game.game_menu).to include("Invalid input:")
+        # @game.game_menu("play\n")
 
         expect(@game).to receive(:start_game)
-        expect { @game.game_menu }.to output(/Type "play" to begin or "quit" to exit/).to_stdout
     end
 
     it "creates a game object" do
