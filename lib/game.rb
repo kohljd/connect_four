@@ -106,6 +106,7 @@ class Game
         input = gets.strip.upcase
         if input == "YES"
             Game.new
+            @current_player = @player_1
             game_menu
         elsif input == "NO"
             print "Goodbye!"
