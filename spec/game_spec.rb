@@ -63,26 +63,42 @@ RSpec.describe Game do
         
         describe "for player" do
             describe "validates turn input" do
-                it "if valid column option" do
-                    #valid entry
-                    expect(@game.valid_column?()).to be true
-                    
-                    #invalid entry with error message displayed
-                    expect(@game.valid_column?()).to be false
-                    expect(@game.valid_column?()).to be_a(String)
-                end
-    
-                it "if column is full" do
-                    #valid entry
-                    expect(@game.valid_column?()).to be true
-                    
-                    #invalid entry with error message displayed
-                    expect(@game.valid_column?()).to be false
-                    expect(@game.valid_column?()).to be_a(String)
-                end
+                it "#valid_column?" do
+                    #setup of #column_full?, may not need next line
+                    allow(@game).to receive(:column_full?)
+                    @game.valid_column?("A")
 
-                # write tests for valid_column? and column_full? methods
-            end
+                    expect {@game.valid_column?("A")}.to have_received(:column_full?)
+                    
+                    @game.valid_column?("H")
+                    expect {@game.valid_column?("H")}.to output(/Invalid column name:/).to_stdout
+                end 
+    
+            describe "#column_full?" do
+                before :each do 
+                    @full_board = [
+                        ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
+                        ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
+                        ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
+                        ['O', 'X', 'X', 'O', 'O', 'X', 'X'],
+                        ['O', 'O', 'X', 'X', 'X', 'O', 'O'],
+                        ['O', 'O', 'X', 'O', 'X', 'O', 'O'],
+                        ['X', 'X', 'O', 'X', 'O', 'O', 'X']
+                    ]
+                    @full_board_game = Game.new
+                    @game.instance_variable_set(:@board, @board_1)
+                    @full_board_game.instance_variable_set(:@board, @full_board)
+                end
+                    it "if column is full" do
+
+
+                        #valid entry
+                        expect(@game.valid_column?()).to be true
+                        
+                        #invalid entry with error message displayed
+                        expect(@game.valid_column?()).to be false
+                    end
+                end
         end
 
         describe "for computer" do
