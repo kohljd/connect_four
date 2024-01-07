@@ -139,11 +139,17 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
-            expect(@game.@board_1.diagonal_win?).to be true
-            expect(@game.winning_board.diagonal_win?).to be true
+            game_1 = Game.new
+            losing_game = Game.new
+            @game.instance_variable_set(:@board, @board_1)
+            game_1.instance_variable_set(:@board, winning_board)
+            losing_game.instance_variable_set(:@board, losing_board)
 
-            #diff manual board
-            expect(@game.losing_board.diagonal_win?).to be false
+            # top left to bottom right
+            expect(@game.diagonal_win?).to be true
+            # top right to bottom left
+            expect(game_1.diagonal_win?).to be true
+            expect(losing_game.diagonal_win?).to be false
         end
 
         it "checks for tie" do
