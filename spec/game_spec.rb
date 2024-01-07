@@ -26,14 +26,6 @@ RSpec.describe Game do
         @game.game_menu
     end
 
-    # describe "beginning" do
-    #     it "game menu accepts user input" do
-    #         allow(@game).to receive(:gets).and_return("play\n")
-    #         expect(@game).to receive(:start_game)
-    #         @@game.game_menu
-    #     end
-    # end
-
     describe "turn" do
         before :each do
             @current_player_input = "A"
@@ -184,39 +176,12 @@ RSpec.describe Game do
                     current_player_input = "A"
                     allow(@game).to receive(:gets).and_return("NO\n")
 
-
                     expect(@game).to receive(:take_turn).with(current_player_input)
                     @game.column_full?(current_player_input)
                 end
             end
         end
-    end
-
-    # describe "for computer" do
-    #     it "plays a token in a random column" do
-    #         # take_turn
-    #     end
-
-    #     describe "checks input validity" do
-    #         it "if a valid column option" do
-    #             # valid entry
-    #             expect(@game.valid_move?).to be true
-
-    #             # invalid entry with an error message displayed
-    #             expect(@game.valid_move?).to be false
-    #         end
-
-    #         it "if the column is full" do
-    #             # valid entry
-    #             expect(@game.valid_move?).to be true
-
-    #             # invalid entry with an error message displayed
-    #             expect(@game.valid_move?).to be false
-    #         end
-    #     end
-    # end
-
-    
+    end    
 
     describe "ending" do
         before(:each) do
@@ -328,10 +293,6 @@ RSpec.describe Game do
             
             @game.instance_variable_set(:@board, tie_board)
             expect(@game.tie_game?).to be true
-
-            # not_a_tie_game = Game.new
-            # not_a_tie_game.instance_variable_set(:@board, @board_1)
-            # expect(not_a_tie_game.tie_game?).to be false
         end
 
         # it "checks for wins with consecutive tokens" do
