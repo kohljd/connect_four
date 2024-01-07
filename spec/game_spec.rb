@@ -186,7 +186,8 @@ RSpec.describe Game do
     describe "ending" do
         before(:each) do
             @game = Game.new
-            @board_1 = [
+            @board_1 = Board.new
+            @board_1_array = [
                 ['X', '.', '.', '.', '.', '.', '.'],
                 ['.', 'X', '.', '.', '.', '.', '.'],
                 ['.', '.', 'X', '.', '.', '.', '.'],
@@ -195,6 +196,7 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
+            @board_1.instance_variable_set(:@board, @board_1_array)
             @board = Board.new
             @board_array = [
                 ['X', '.', '.', '.', '.', '.', '.'],
@@ -206,11 +208,11 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
             @board.instance_variable_set(:@board, @board_array)
-            @game.instance_variable_set(:@board, @board_1)
+            # @game.instance_variable_set(:@board, @board_1)
         end
 
         it "checks vertical win" do
-            winning_board = [
+            winning_board_array = [
                 ['X', '.', '.', '.', '.', '.', '.'],
                 ['X', '.', '.', '.', '.', '.', '.'],
                 ['X', '.', '.', '.', '.', '.', '.'],
@@ -219,16 +221,16 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
-            losing_game = Game.new
-            @game.instance_variable_set(:@board, winning_board)
-            losing_game.instance_variable_set(:@board, @board_1)
+            winning_board = Board.new
+            winning_game = Game.new
+            winning_board.instance_variable_set(:@board, winning_board_array)            
+            winning_game.instance_variable_set(:@board, winning_board)
 
-            expect(@game.vertical_win?).to be true
-            expect(@game.vertical_win?).to be false
+            expect(winning_game.vertical_win?).to be true
         end
 
         it "checks for horizontal win" do
-            winning_board = [
+            winning_board_array = [
                 ['X', 'X', 'X', 'X', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.'],
@@ -238,12 +240,12 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
-            losing_game = Game.new
-            @game.instance_variable_set(:@board, winning_board)
-            losing_game.instance_variable_set(:@board, @board_1)
+            winning_board = Board.new
+            winning_game = Game.new
+            winning_board.instance_variable_set(:@board, winning_board_array)            
+            winning_game.instance_variable_set(:@board, winning_board)
 
-            expect(@game.horizontal_win?).to be true
-            expect(losing_game.horizontal_win?).to be false
+            expect(winning_game.horizontal_win?).to be true
         end
 
         it "checks for diagonal win" do
@@ -293,6 +295,10 @@ RSpec.describe Game do
             
             @game.instance_variable_set(:@board, tie_board)
             expect(@game.tie_game?).to be true
+
+            not_a_tie_game = Game.new
+            not_a_tie_game.instance_variable_set(:@board, @board_1)
+            expect(not_a_tie_game.tie_game?).to be false
         end
 
         # it "checks for wins with consecutive tokens" do
