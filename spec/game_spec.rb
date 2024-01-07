@@ -248,8 +248,9 @@ RSpec.describe Game do
             expect(winning_game.horizontal_win?).to be true
         end
 
-        it "checks for diagonal win" do
-            winning_board = [
+        it "checks for diagonal wins" do
+            winning_board = Board.new
+            winning_board_array = [
                 ['.', '.', '.', '.', '.', '.', 'X'],
                 ['.', '.', '.', '.', '.', 'X', '.'],
                 ['.', '.', '.', '.', 'X', '.', '.'],
@@ -258,7 +259,8 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
-            losing_board = [
+            losing_board = Board.new
+            losing_board_array = [
                 ['X', '.', '.', '.', '.', '.', '.'],
                 ['X', '.', '.', '.', '.', '.', '.'],
                 ['X', '.', '.', '.', '.', '.', '.'],
@@ -267,16 +269,21 @@ RSpec.describe Game do
                 ['.', '.', '.', '.', '.', '.', '.'],
                 ['.', '.', '.', '.', '.', '.', '.']
             ]
-            game_1 = Game.new
-            losing_game = Game.new
-            @game.instance_variable_set(:@board, @board_1)
-            game_1.instance_variable_set(:@board, winning_board)
-            losing_game.instance_variable_set(:@board, losing_board)
 
             # top-left to bottom-right
+            @game.instance_variable_set(:@board, @board_1)
             expect(@game.diagonal_win?).to be true
+
             # top-right to bottom-left
+            winning_board.instance_variable_set(:@board, winning_board_array)
+            game_1 = Game.new
+            game_1.instance_variable_set(:@board, winning_board)
             expect(game_1.diagonal_win?).to be true
+
+            #losing game
+            losing_board.instance_variable_set(:@board, losing_board_array)
+            losing_game = Game.new
+            losing_game.instance_variable_set(:@board, losing_board)
             expect(losing_game.diagonal_win?).to be false
         end
 
@@ -302,15 +309,20 @@ RSpec.describe Game do
         end
 
         # it "checks for wins with consecutive tokens" do
-        #     # code, use @board_1
-        # end
-
-        # it "displays the end game message" do
-        #     # code
-        # end
-
-        # it "does not allow additional turns" do
-        #     # end_game/#play_again combo or delete this one
+        #     board = Board.new
+        #     board_array = [
+        #         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
+        #         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
+        #         ['X', 'O', 'O', 'X', 'X', 'O', 'O'],
+        #         ['O', 'X', 'X', 'O', 'O', 'X', 'X'],
+        #         ['O', 'O', 'X', 'X', 'X', 'O', 'O'],
+        #         ['O', 'O', 'X', 'O', 'X', 'O', 'O'],
+        #         ['X', 'X', 'O', 'X', 'O', 'O', 'X']
+        #     ]
+        #     board.instance_variable_set(:@board, board_array)            
+        #     @game.instance_variable_set(:@board, board)
+            
+        #     expect(@game.game_over?).to receive(:change_player)
         # end
 
         # it "returns the user to the game menu" do
