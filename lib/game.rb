@@ -1,6 +1,8 @@
 class Game
-    attr_reader :board,
-                :player
+    attr_reader :board, 
+                :current_player,
+                :player_1,
+                :player_2
     
     def initialize
         @board = Board.new
@@ -164,7 +166,7 @@ class Game
         rows = @board.board.size
         columns = @board.board.first.size
         (0..rows - 3).each do |row|
-            (columns - 4..columns - 1).each do |column|
+            (0..columns - 4).each do |column|
                 return true if (0..3).all? {|num| @board.board[row + num][column - num] == @current_player.token }
             end
         end
